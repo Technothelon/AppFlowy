@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:appflowy/drive_experiment/runtime.dart';
 
 import 'package:appflowy/generated/locale_keys.g.dart';
 import 'package:appflowy/startup/startup.dart';
@@ -96,6 +97,11 @@ class CoverImagePickerBloc
     if (state is _FileImagePicked) {
       try {
         final path = state.path;
+        if (Platform.isAndroid && DriveRuntime.ready) {
+          imagePaths.add(await DriveRuntime.addImage(path));
+          await prefs.setStringList(kLocalImagesKey, imagePaths);
+          return imagePaths;
+        }
         final newPath = p.join(directory, p.split(path).last);
         final newFile = await File(path).copy(newPath);
         imagePaths.add(newFile.path);

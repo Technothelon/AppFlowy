@@ -1,3 +1,4 @@
+import 'package:appflowy/drive_experiment/runtime.dart';
 import 'dart:io';
 
 import 'package:appflowy/generated/locale_keys.g.dart';
@@ -303,7 +304,7 @@ class _DocumentImmersiveCoverState extends State<DocumentImmersiveCover> {
         height: height,
         width: double.infinity,
         child: Image.file(
-          File(cover.value),
+          File(DriveRuntime.resolveMedia(cover.value)),
           fit: BoxFit.cover,
         ),
       );

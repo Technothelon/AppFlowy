@@ -1,3 +1,4 @@
+import 'package:appflowy/drive_experiment/runtime.dart';
 import 'dart:io';
 import 'dart:math';
 
@@ -138,7 +139,7 @@ class _ResizableImageState extends State<ResizableImage> {
       child = _cacheImage!;
     } else {
       // load local file
-      _cacheImage ??= Image.file(File(src));
+      _cacheImage ??= Image.file(File(DriveRuntime.resolveMedia(src)));
       child = _cacheImage!;
     }
     return Stack(

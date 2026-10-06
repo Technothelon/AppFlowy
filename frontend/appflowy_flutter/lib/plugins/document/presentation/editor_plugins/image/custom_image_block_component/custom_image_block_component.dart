@@ -1,3 +1,4 @@
+import 'package:appflowy/drive_experiment/runtime.dart';
 import 'dart:io';
 
 import 'package:appflowy/generated/flowy_svgs.g.dart';
@@ -408,7 +409,7 @@ class CustomImageBlockComponentState extends State<CustomImageBlockComponent>
       return false;
     }
 
-    if (!isURL(url) && !File(url).existsSync()) {
+    if (!isURL(url) && !File(DriveRuntime.resolveMedia(url)).existsSync()) {
       return false;
     }
 
@@ -421,7 +422,7 @@ class CustomImageBlockComponentState extends State<CustomImageBlockComponent>
       return;
     }
 
-    final imageFile = await CustomImageCacheManager().getSingleFile(url);
+    final imageFile = await CustomImageCacheManager().getSingleFile(DriveRuntime.resolveMedia(url));
     if (imageFile.existsSync()) {
       final result = await SaverGallery.saveImage(
         imageFile.readAsBytesSync(),

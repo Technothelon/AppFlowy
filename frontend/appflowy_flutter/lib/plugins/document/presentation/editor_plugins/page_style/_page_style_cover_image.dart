@@ -1,3 +1,4 @@
+import 'package:appflowy/drive_experiment/runtime.dart';
 import 'dart:async';
 import 'dart:io';
 
@@ -146,7 +147,7 @@ class PageStyleCoverImage extends StatelessWidget {
 
     if (type == PageStyleCoverImageType.localImage) {
       preview = Image.file(
-        File(value),
+        File(DriveRuntime.resolveMedia(value)),
         fit: BoxFit.cover,
       );
     }

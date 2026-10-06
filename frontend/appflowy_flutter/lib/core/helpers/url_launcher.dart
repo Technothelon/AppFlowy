@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:appflowy/drive_experiment/runtime.dart';
 
 import 'package:appflowy/generated/locale_keys.g.dart';
 import 'package:appflowy/shared/patterns/common_patterns.dart';
@@ -127,7 +128,8 @@ Future<bool> _afLaunchLocalUri(
   BuildContext? context,
   OnFailureCallback? onFailure,
 }) async {
-  final decodedUrl = Uri.decodeComponent(uri.toString());
+  final sourcePath = uri.scheme == 'file' ? uri.toFilePath() : Uri.decodeComponent(uri.toString());
+  final decodedUrl = DriveRuntime.resolveMedia(sourcePath);
   // open the file with the OpenfileX
   var result = await OpenFilex.open(decodedUrl);
   if (result.type != ResultType.done) {

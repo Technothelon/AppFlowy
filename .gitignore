@@ -42,3 +42,31 @@ frontend/*.deb
 **/Cargo.toml.bak
 
 **/.cargo/**
+# Private Drive experiment runtime and generated outputs
+/tools/drive-sync/**/Private/
+/tools/drive-sync/**/Pairing/
+/tools/drive-sync/**/Data/
+/tools/drive-sync/**/Media/
+/tools/drive-sync/**/State/
+/tools/drive-sync/**/SyncBackups/
+/tools/drive-sync/**/Cache/
+/tools/drive-sync/**/Run/
+/tools/drive-sync/**/Temp/
+/tools/drive-sync/**/target/
+/tools/drive-sync/**/schema-target/
+/tools/drive-sync/**/schema-workspace/
+/tools/drive-sync/**/fixture-*/
+/tools/drive-sync/**/launcher-fixture-*/
+/tools/drive-sync/**/__pycache__/
+/tools/drive-sync/**/.venv/
+/tools/drive-sync/Sync/config.json
+/tools/drive-sync/Android/Tests/vectors.json
+/tools/drive-sync/Android/Tests/*Profile/
+/tools/drive-sync/Android/Tests/DriveExperiment/
+**/*.afpair
+**/*.afsync
+**/*.apk
+**/*.keystore
+**/vault.key
+**/rclone.conf
+**/pairing-code.txt

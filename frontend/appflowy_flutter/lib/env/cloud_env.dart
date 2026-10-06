@@ -51,34 +51,7 @@ const String kAppflowyCloudUrl = "https://beta.appflowy.cloud";
 /// currently set cloud type. The default return value is `CloudType.local`
 /// if no valid setting is found.
 ///
-Future<AuthenticatorType> getAuthenticatorType() async {
-  final value = await getIt<KeyValueStorage>().get(KVKeys.kCloudType);
-  if (value == null && !integrationMode().isUnitTest) {
-    // if the cloud type is not set, then set it to AppFlowy Cloud as default.
-    await useAppFlowyBetaCloudWithURL(
-      kAppflowyCloudUrl,
-      AuthenticatorType.appflowyCloud,
-    );
-    return AuthenticatorType.appflowyCloud;
-  }
-
-  switch (value ?? "0") {
-    case "0":
-      return AuthenticatorType.local;
-    case "2":
-      return AuthenticatorType.appflowyCloud;
-    case "3":
-      return AuthenticatorType.appflowyCloudSelfHost;
-    case "4":
-      return AuthenticatorType.appflowyCloudDevelop;
-    default:
-      await useAppFlowyBetaCloudWithURL(
-        kAppflowyCloudUrl,
-        AuthenticatorType.appflowyCloud,
-      );
-      return AuthenticatorType.appflowyCloud;
-  }
-}
+Future<AuthenticatorType> getAuthenticatorType() async => AuthenticatorType.local;
 
 /// Determines whether authentication is enabled.
 ///
@@ -202,42 +175,10 @@ class AppFlowyCloudSharedEnv {
   AuthenticatorType get authenticatorType => _authenticatorType;
 
   static Future<AppFlowyCloudSharedEnv> fromEnv() async {
-    // If [Env.enableCustomCloud] is true, then use the custom cloud configuration.
-    if (Env.enableCustomCloud) {
-      // Use the custom cloud configuration.
-      var authenticatorType = await getAuthenticatorType();
-
-      final appflowyCloudConfig = authenticatorType.isAppFlowyCloudEnabled
-          ? await getAppFlowyCloudConfig(authenticatorType)
-          : AppFlowyCloudConfiguration.defaultConfig();
-
-      // In the backend, the value '2' represents the use of AppFlowy Cloud. However, in the frontend,
-      // we distinguish between [AuthenticatorType.appflowyCloudSelfHost] and [AuthenticatorType.appflowyCloud].
-      // When the cloud type is [AuthenticatorType.appflowyCloudSelfHost] in the frontend, it should be
-      // converted to [AuthenticatorType.appflowyCloud] to align with the backend representation,
-      // where both types are indicated by the value '2'.
-      if (authenticatorType.isAppFlowyCloudEnabled) {
-        authenticatorType = AuthenticatorType.appflowyCloud;
-      }
-      return AppFlowyCloudSharedEnv(
-        authenticatorType: authenticatorType,
-        appflowyCloudConfig: appflowyCloudConfig,
-      );
-    } else {
-      // Using the cloud settings from the .env file.
-      final appflowyCloudConfig = AppFlowyCloudConfiguration(
-        base_url: Env.afCloudUrl,
-        ws_base_url: await _getAppFlowyCloudWSUrl(Env.afCloudUrl),
-        gotrue_url: await _getAppFlowyCloudGotrueUrl(Env.afCloudUrl),
-        enable_sync_trace: false,
-        base_web_domain: Env.baseWebDomain,
-      );
-
-      return AppFlowyCloudSharedEnv(
-        authenticatorType: AuthenticatorType.fromValue(Env.authenticatorType),
-        appflowyCloudConfig: appflowyCloudConfig,
-      );
-    }
+    return AppFlowyCloudSharedEnv(
+      authenticatorType: AuthenticatorType.local,
+      appflowyCloudConfig: AppFlowyCloudConfiguration.defaultConfig(),
+    );
   }
 
   @override

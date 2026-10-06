@@ -15,6 +15,7 @@ import 'package:appflowy_backend/protobuf/flowy-user/protobuf.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flowy_infra_ui/flowy_infra_ui.dart';
 import 'package:flutter/material.dart';
+import 'package:appflowy/drive_experiment/start.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
@@ -50,6 +51,7 @@ class MobileHomePageHeader extends StatelessWidget {
                 HomePageSettingsPopupMenu(
                   userProfile: userProfile,
                 ),
+                const DriveSyncButton(),
                 const HSpace(8.0),
               ],
             ),

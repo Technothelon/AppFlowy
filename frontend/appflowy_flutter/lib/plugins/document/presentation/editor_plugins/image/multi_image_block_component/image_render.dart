@@ -1,3 +1,4 @@
+import 'package:appflowy/drive_experiment/runtime.dart';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -30,7 +31,7 @@ class ImageRender extends StatelessWidget {
           userProfilePB: userProfile,
           fit: fit,
         ),
-      CustomImageType.local => Image.file(File(image.url), fit: fit),
+      CustomImageType.local => Image.file(File(DriveRuntime.resolveMedia(image.url)), fit: fit),
     };
 
     return Container(

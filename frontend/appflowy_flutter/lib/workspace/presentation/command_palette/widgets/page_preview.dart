@@ -1,3 +1,4 @@
+import 'package:appflowy/drive_experiment/runtime.dart';
 import 'dart:io';
 
 import 'package:appflowy/features/workspace/logic/workspace_bloc.dart';
@@ -169,7 +170,7 @@ class PagePreview extends StatelessWidget {
         height: height,
         width: double.infinity,
         child: Image.file(
-          File(cover.value),
+          File(DriveRuntime.resolveMedia(cover.value)),
           fit: BoxFit.cover,
         ),
       );

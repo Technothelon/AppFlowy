@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:appflowy/drive_experiment/runtime.dart';
 
 import 'package:appflowy/generated/locale_keys.g.dart';
 import 'package:appflowy/plugins/document/application/prelude.dart';
@@ -16,6 +17,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:path/path.dart' as p;
 
 Future<String?> saveImageToLocalStorage(String localImagePath) async {
+  if (Platform.isAndroid && DriveRuntime.ready) return DriveRuntime.addImage(localImagePath);
   final path = await getIt<ApplicationDataStorage>().getPath();
   final imagePath = p.join(
     path,
@@ -123,7 +125,7 @@ int deleteImageTestCounter = 0;
 
 Future<void> deleteImageFromLocalStorage(String localImagePath) async {
   try {
-    await File(localImagePath)
+    await File(DriveRuntime.resolveMedia(localImagePath))
         .delete()
         .whenComplete(() => deleteImageTestCounter++);
   } catch (e) {

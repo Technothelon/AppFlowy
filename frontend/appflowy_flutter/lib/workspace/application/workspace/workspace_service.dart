@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'package:appflowy/drive_experiment/runtime.dart';
+import 'package:appflowy/drive_experiment/view_compatibility.dart';
 
 import 'package:appflowy_backend/dispatch/dispatch.dart';
 import 'package:appflowy_backend/protobuf/flowy-error/errors.pb.dart';
@@ -25,8 +27,8 @@ class WorkspaceService {
     final payload = CreateViewPayloadPB.create()
       ..parentViewId = workspaceId
       ..name = name
-      ..layout = layout ?? ViewLayoutPB.Document
-      ..section = viewSection;
+      ..layout = layout ?? ViewLayoutPB.Document;
+    if (!DriveRuntime.ready) payload.section = viewSection;
 
     if (index != null) {
       payload.index = index;
@@ -44,7 +46,7 @@ class WorkspaceService {
       payload.extra = extra;
     }
 
-    return FolderEventCreateView(payload).send();
+    return createCompatibleDriveView(payload, viewSection);
   }
 
   Future<FlowyResult<WorkspacePB, FlowyError>> getWorkspace() {

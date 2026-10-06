@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'package:appflowy/drive_experiment/runtime.dart';
+import 'package:appflowy/drive_experiment/view_compatibility.dart';
 
 import 'package:appflowy/plugins/document/presentation/editor_plugins/mention/mention_page_bloc.dart';
 import 'package:appflowy/plugins/trash/application/trash_service.dart';
@@ -60,7 +62,7 @@ class ViewBackendService {
       payload.index = index;
     }
 
-    if (section != null) {
+    if (section != null && !DriveRuntime.ready) {
       payload.section = section;
     }
 
@@ -68,7 +70,7 @@ class ViewBackendService {
       payload.viewId = viewId;
     }
 
-    return FolderEventCreateView(payload).send();
+    return createCompatibleDriveView(payload, section);
   }
 
   /// The orphan view is meant to be a view that is not attached to any parent view. By default, this

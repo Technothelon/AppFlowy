@@ -1,3 +1,4 @@
+import 'package:appflowy/drive_experiment/runtime.dart';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -49,7 +50,7 @@ class AFImage extends StatelessWidget {
       );
     } else if (uploadType == FileUploadTypePB.LocalFile) {
       child = Image.file(
-        File(url),
+        File(DriveRuntime.resolveMedia(url)),
         height: height,
         width: width,
         fit: fit,

@@ -7,8 +7,12 @@ import 'package:appflowy_backend/protobuf/flowy-folder/view.pb.dart';
 import 'package:appflowy_editor/appflowy_editor.dart';
 import 'package:appflowy_result/appflowy_result.dart';
 import 'package:fixnum/fixnum.dart';
+import 'package:uuid/uuid.dart';
+import 'package:appflowy/drive_experiment/runtime.dart';
 
 class DocumentService {
+  final Map<String, String> _driveSessions = {};
+
   // unused now.
   Future<FlowyResult<void, FlowyError>> createDocument({
     required ViewPB view,
@@ -26,6 +30,12 @@ class DocumentService {
     required String documentId,
   }) async {
     final payload = OpenDocumentPayloadPB()..documentId = documentId;
+    if (DriveRuntime.ready) {
+      // The installed 0.14.4 SDK requires field 6, absent from the public
+      // frontend schema. Unknown protobuf fields are retained on serialization.
+      final session = _driveSessions.putIfAbsent(documentId, () => const Uuid().v4());
+      payload.mergeFromBuffer([0x32, session.length, ...session.codeUnits]);
+    }
     final result = await DocumentEventOpenDocument(payload).send();
     return result;
   }
@@ -93,6 +103,12 @@ class DocumentService {
   Future<FlowyResult<void, FlowyError>> closeDocument({
     required String viewId,
   }) async {
+    final session = _driveSessions.remove(viewId);
+    if (DriveRuntime.ready && session != null) {
+      final payload = CloseDocumentPayloadPB()..documentId = viewId;
+      payload.mergeFromBuffer([0x12, session.length, ...session.codeUnits]);
+      return DocumentEventCloseDocument(payload).send();
+    }
     final payload = ViewIdPB()..value = viewId;
     final result = await FolderEventCloseView(payload).send();
     return result;

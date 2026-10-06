@@ -1,3 +1,4 @@
+import 'package:appflowy/drive_experiment/runtime.dart';
 import 'dart:io';
 
 import 'package:appflowy/features/workspace/logic/workspace_bloc.dart';
@@ -113,7 +114,7 @@ class _ImageBrowserLayoutState extends State<ImageBrowserLayout> {
                                   borderRadius: Corners.s6Border,
                                   image: image.type == CustomImageType.local
                                       ? DecorationImage(
-                                          image: FileImage(File(image.url)),
+                                          image: FileImage(File(DriveRuntime.resolveMedia(image.url))),
                                           fit: BoxFit.cover,
                                           opacity: 0.5,
                                         )

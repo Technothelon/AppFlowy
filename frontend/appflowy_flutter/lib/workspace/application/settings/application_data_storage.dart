@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:appflowy/drive_experiment/runtime.dart';
 
 import 'package:flutter/foundation.dart';
 
@@ -61,6 +62,9 @@ class ApplicationDataStorage {
   }
 
   Future<String> getPath() async {
+    if (Platform.isAndroid && DriveRuntime.ready) {
+      return p.join(DriveRuntime.root.path, 'Data', 'AppFlowy', 'data_beta.appflowy.cloud');
+    }
     if (_cachePath != null) {
       return _cachePath!;
     }

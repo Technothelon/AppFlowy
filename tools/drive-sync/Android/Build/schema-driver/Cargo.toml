@@ -1,0 +1,9 @@
+[package]
+name = "schema-driver"
+version = "0.1.0"
+edition = "2021"
+license = "AGPL-3.0-only"
+[dependencies]
+flowy-codegen = { path = "../build-tool/flowy-codegen", features = ["dart"] }
+home = "=0.5.9"
+unicode-segmentation = "=1.12.0"

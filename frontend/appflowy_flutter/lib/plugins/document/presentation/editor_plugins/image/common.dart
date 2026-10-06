@@ -1,3 +1,4 @@
+import 'package:appflowy/drive_experiment/runtime.dart';
 import 'dart:io';
 
 import 'package:flutter/widgets.dart';
@@ -58,7 +59,7 @@ class ImageBlockData {
       case CustomImageType.external:
         return NetworkImage(url);
       case CustomImageType.local:
-        return FileImage(File(url));
+        return FileImage(File(DriveRuntime.resolveMedia(url)));
     }
   }
 }

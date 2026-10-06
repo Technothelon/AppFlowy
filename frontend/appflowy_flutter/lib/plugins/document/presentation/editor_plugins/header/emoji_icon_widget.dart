@@ -1,3 +1,4 @@
+import 'package:appflowy/drive_experiment/runtime.dart';
 import 'dart:convert';
 import 'dart:io';
 
@@ -163,7 +164,7 @@ class _RawEmojiIconWidgetState extends State<RawEmojiIconWidget> {
               child: child,
             );
           }
-          final imageFile = File(url);
+          final imageFile = File(DriveRuntime.resolveMedia(url));
           if (!imageFile.existsSync()) {
             throw PathNotFoundException(url, const OSError());
           }
@@ -171,7 +172,7 @@ class _RawEmojiIconWidgetState extends State<RawEmojiIconWidget> {
             dimension: widget.emojiSize,
             child: isSvg
                 ? SvgPicture.file(
-                    File(url),
+                    File(DriveRuntime.resolveMedia(url)),
                     width: widget.emojiSize,
                     height: widget.emojiSize,
                   )

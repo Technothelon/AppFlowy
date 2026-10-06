@@ -1,3 +1,5 @@
+> **Unofficial Google Drive sync experiment:** source-only Linux/Android prototype based on AppFlowy 0.14.4. See [DRIVE_SYNC.md](DRIVE_SYNC.md) for scope, build requirements, validation and limitations. This fork is not endorsed by AppFlowy.
+
 <h1 align="center" style="border-bottom: none">
     <b>
         <a href="https://www.appflowy.com">AppFlowy</a><br>

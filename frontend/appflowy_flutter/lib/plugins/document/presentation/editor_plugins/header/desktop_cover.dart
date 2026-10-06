@@ -1,3 +1,4 @@
+import 'package:appflowy/drive_experiment/runtime.dart';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -116,7 +117,7 @@ class _DesktopCoverState extends State<DesktopCover> {
               height: height,
               width: double.infinity,
               child: Image.file(
-                File(cover.value),
+                File(DriveRuntime.resolveMedia(cover.value)),
                 fit: BoxFit.cover,
               ),
             );
@@ -146,7 +147,7 @@ class _DesktopCoverState extends State<DesktopCover> {
                 const SizedBox.shrink(),
           );
         }
-        final imageFile = File(detail);
+        final imageFile = File(DriveRuntime.resolveMedia(detail));
         if (!imageFile.existsSync()) {
           return const SizedBox.shrink();
         }

@@ -1,3 +1,4 @@
+import 'package:appflowy/drive_experiment/runtime.dart';
 import 'dart:io';
 
 import 'package:appflowy/generated/flowy_svgs.g.dart';
@@ -379,7 +380,7 @@ class _ViewCover extends StatelessWidget {
 
     if (type == PageStyleCoverImageType.localImage) {
       return Image.file(
-        File(value),
+        File(DriveRuntime.resolveMedia(value)),
         fit: BoxFit.cover,
       );
     }
@@ -397,7 +398,7 @@ class _ViewCover extends StatelessWidget {
             userProfilePB: userProfilePB,
           );
         }
-        final imageFile = File(value);
+        final imageFile = File(DriveRuntime.resolveMedia(value));
         if (!imageFile.existsSync()) {
           return placeholder;
         }

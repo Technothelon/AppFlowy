@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:appflowy/drive_experiment/runtime.dart';
 
 import 'package:appflowy/core/helpers/url_launcher.dart';
 import 'package:appflowy/generated/locale_keys.g.dart';
@@ -26,6 +27,9 @@ import 'package:path/path.dart' as p;
 import 'package:universal_platform/universal_platform.dart';
 
 Future<String?> saveFileToLocalStorage(String localFilePath) async {
+  if (Platform.isAndroid && DriveRuntime.ready) {
+    return DriveRuntime.addImage(localFilePath);
+  }
   final path = await getIt<ApplicationDataStorage>().getPath();
   final filePath = p.join(path, 'files');
 

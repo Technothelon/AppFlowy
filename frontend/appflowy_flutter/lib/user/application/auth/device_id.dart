@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:appflowy/drive_experiment/runtime.dart';
 
 import 'package:appflowy/startup/startup.dart';
 import 'package:appflowy_backend/log.dart';
@@ -8,6 +9,9 @@ import 'package:flutter/services.dart';
 final DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
 
 Future<String> getDeviceId() async {
+  if (Platform.isAndroid && DriveRuntime.ready) {
+    return DriveRuntime.config['device_id'] as String;
+  }
   if (integrationMode().isTest) {
     return "test_device_id";
   }

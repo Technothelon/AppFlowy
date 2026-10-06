@@ -1,3 +1,4 @@
+import 'package:appflowy/drive_experiment/runtime.dart';
 import 'dart:io';
 
 import 'package:appflowy/generated/flowy_svgs.g.dart';
@@ -313,7 +314,7 @@ class _CoverImagePreviewWidgetState extends State<CoverImagePreviewWidget> {
               },
               fileImage: (path) {
                 return DecorationImage(
-                  image: FileImage(File(path)),
+                  image: FileImage(File(DriveRuntime.resolveMedia(path))),
                   fit: BoxFit.cover,
                 );
               },

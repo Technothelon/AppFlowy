@@ -1,3 +1,4 @@
+import 'package:appflowy/drive_experiment/runtime.dart';
 import 'dart:io';
 import 'dart:math';
 
@@ -701,7 +702,7 @@ class DocumentCoverState extends State<DocumentCover> {
                 const SizedBox.shrink(),
           );
         }
-        final imageFile = File(detail);
+        final imageFile = File(DriveRuntime.resolveMedia(detail));
         if (!imageFile.existsSync()) {
           WidgetsBinding.instance.addPostFrameCallback((_) {
             widget.onChangeCover(CoverType.none, null);

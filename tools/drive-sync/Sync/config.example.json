@@ -1,0 +1,16 @@
+{
+  "protocol": 1,
+  "vault_id": "REPLACE_WITH_NEW_VAULT_UUID",
+  "device_id": "REPLACE_WITH_NEW_DEVICE_UUID",
+  "workspace_id": "REPLACE_WITH_COPIED_WORKSPACE_UUID",
+  "uid": "REPLACE_WITH_COPIED_USER_ID",
+  "profile": "/absolute/path/to/private-experiment",
+  "key_file": "/absolute/path/to/private-experiment/Sync/Private/vault.key",
+  "rclone_config": "/absolute/path/to/private-experiment/Sync/Private/rclone.conf",
+  "remote": "gdrive:AppFlowy-Experiment-Sync/REPLACE_WITH_NEW_VAULT_UUID",
+  "media": {
+    "Assets": "Media/Assets",
+    "Full-Source": "Media/Full-Source"
+  },
+  "media_aliases": {}
+}

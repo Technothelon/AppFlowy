@@ -1,3 +1,4 @@
+import 'package:appflowy/drive_experiment/runtime.dart';
 import 'dart:io';
 
 import 'package:appflowy/generated/locale_keys.g.dart';
@@ -217,13 +218,13 @@ class _IconUploaderState extends State<IconUploader> {
     if (image is _FileImage) {
       if (url.endsWith(_svgSuffix)) {
         return SvgPicture.file(
-          File(url),
+          File(DriveRuntime.resolveMedia(url)),
           width: 200,
           height: 200,
         );
       }
       return Image.file(
-        File(url),
+        File(DriveRuntime.resolveMedia(url)),
         width: 200,
         height: 200,
       );

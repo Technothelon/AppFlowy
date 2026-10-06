@@ -1,4 +1,5 @@
 import 'package:appflowy/core/helpers/url_launcher.dart';
+import 'package:appflowy/drive_experiment/runtime.dart';
 import 'package:appflowy/generated/flowy_svgs.g.dart';
 import 'package:appflowy/generated/locale_keys.g.dart';
 import 'package:appflowy/mobile/presentation/base/animated_gesture.dart';
@@ -80,6 +81,14 @@ class _MobileSyncErrorPage extends StatelessWidget {
             color: Theme.of(context).hintColor,
             textAlign: TextAlign.center,
           ),
+          if (DriveRuntime.ready && error != null) ...[
+            const VSpace(16.0),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24.0),
+              child: SelectableText('${error!.code}: ${error!.msg}',
+                  textAlign: TextAlign.center),
+            ),
+          ],
         ],
       ),
     );
